@@ -42,7 +42,7 @@ func MouseMoveUp(ctx *gin.Context) {
 	move, _ := strconv.ParseInt(strMove, 10, 64)
 
 	x, y := robotgo.GetMousePos()
-	robotgo.Move(x, y+int(move))
+	robotgo.Move(x, y-int(move))
 
 	ctx.JSON(http.StatusOK, util.Success())
 }
@@ -53,7 +53,7 @@ func MouseMoveDown(ctx *gin.Context) {
 	move, _ := strconv.ParseInt(strMove, 10, 64)
 
 	x, y := robotgo.GetMousePos()
-	robotgo.Move(x, y-int(move))
+	robotgo.Move(x, y+int(move))
 
 	ctx.JSON(http.StatusOK, util.Success())
 }
