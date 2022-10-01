@@ -27,6 +27,7 @@ func GetRouter() *gin.Engine {
 		v1.GET("/up", mouse.MouseMoveUp)
 		v1.GET("/down", mouse.MouseMoveDown)
 		v1.GET("/move", mouse.MouseMove)
+		v1.GET("/move2", mouse.MouseMove2)
 		v1.GET("/leftclick", mouse.MouseLeftClick)
 		v1.GET("/leftdoubleclick", mouse.MouseLeftDoubleClick)
 		v1.GET("/rightclick", mouse.MouseRightClick)

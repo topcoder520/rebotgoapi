@@ -1,6 +1,7 @@
 package mouse
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 	"strconv"
@@ -71,6 +72,22 @@ func MouseMove(ctx *gin.Context) {
 	x1 := math.Cos(radian) * float64(move)
 	x, y := robotgo.GetMousePos()
 	robotgo.Move(x+int(x1), y+int(y1))
+	ctx.JSON(http.StatusOK, util.Success())
+}
+
+//MouseMove2 移动鼠标
+func MouseMove2(ctx *gin.Context) {
+	strdistanceX := ctx.DefaultQuery("distanceX", "0") //X轴移动距离
+	distanceX, err := strconv.ParseFloat(strdistanceX, 64)
+	fmt.Println(err)
+	strdistanceY := ctx.DefaultQuery("distanceY", "0") //Y轴移动距离
+	distanceY, _ := strconv.ParseFloat(strdistanceY, 64)
+
+	x, y := robotgo.GetMousePos()
+	fmt.Println(x, y)
+	fmt.Println(distanceX, distanceY)
+	fmt.Println(x+int(distanceX), y+int(distanceY))
+	robotgo.Move(x+int(distanceX), y+int(distanceY))
 	ctx.JSON(http.StatusOK, util.Success())
 }
 
