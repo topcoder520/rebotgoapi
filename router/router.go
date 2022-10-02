@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/topcoder520/rebotgoapi/keyboard"
 	"github.com/topcoder520/rebotgoapi/mouse"
 	"github.com/topcoder520/rebotgoapi/util"
 )
@@ -44,6 +45,12 @@ func GetRouter() *gin.Engine {
 		v1.GET("/wheelright", mouse.MouseWheelRight)
 		v1.GET("/wheelscrollup", mouse.MouseScrollMouseUp)
 		v1.GET("/wheelscrolldown", mouse.MouseScrollMouseDown)
+	}
+	//键盘操作
+	v2 := router.Group("/key")
+	{
+		v2.POST("/Keyinputstring", keyboard.KeyInputString)
+		v2.GET("/keytap", keyboard.KeyTap)
 	}
 	return router
 }
