@@ -42,7 +42,22 @@ func KeyTap(ctx *gin.Context) {
 		} else {
 			robotgo.KeyTap(key)
 		}
-
+	}
+	if key == "x,ctrl" || key == "c,ctrl" || key == "v,ctrl" {
+		str := ReadAll(ctx)
+		if len(str) > 0 {
+			ctx.JSON(http.StatusOK, util.SuccessWithData(str))
+			return
+		}
 	}
 	ctx.JSON(http.StatusOK, util.Success())
+}
+
+// ReadAll 从剪切板读取数据
+func ReadAll(ctx *gin.Context) string {
+	str, err := robotgo.ReadAll()
+	if err != nil {
+		return ""
+	}
+	return str
 }
