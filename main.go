@@ -62,7 +62,7 @@ func main() {
 func onReady() {
 	systray.SetIcon(Data)
 	systray.SetTitle("键鼠模拟服务")
-	systray.SetTooltip("服务已最小化右下角, 右键点击打开菜单！")
+	systray.SetTooltip("右键点击打开菜单！")
 	mShow := systray.AddMenuItem("显示", "显示服务局域网IP")
 	systray.AddSeparator()
 	mQuit := systray.AddMenuItem("退出", "退出程序")

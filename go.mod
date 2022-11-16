@@ -7,6 +7,7 @@ require (
 	fyne.io/systray v1.10.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-vgo/robotgo v1.0.0-beta5.3
+	github.com/gorilla/websocket v1.5.0
 )
 
 require (

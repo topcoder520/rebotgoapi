@@ -7,6 +7,7 @@ import (
 	"github.com/topcoder520/rebotgoapi/keyboard"
 	"github.com/topcoder520/rebotgoapi/mouse"
 	"github.com/topcoder520/rebotgoapi/util"
+	"github.com/topcoder520/rebotgoapi/ws"
 )
 
 func GetRouter() *gin.Engine {
@@ -52,6 +53,12 @@ func GetRouter() *gin.Engine {
 		v2.POST("/Keyinputstring", keyboard.KeyInputString)
 		v2.GET("/keytap", keyboard.KeyTap)
 	}
+	//websocket
+	v3 := router.Group("/ws")
+	{
+		v3.GET("/upgrader", ws.CaptureScreen)
+	}
+
 	return router
 }
 func Cors() gin.HandlerFunc {
