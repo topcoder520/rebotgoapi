@@ -1,8 +1,11 @@
 package ws
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-vgo/robotgo"
@@ -15,6 +18,10 @@ var upgrader = websocket.Upgrader{
 	},
 } // use default options
 
+type TextMessage struct {
+	cmd string
+}
+
 func CaptureScreen(ctx *gin.Context) {
 	c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
@@ -22,15 +29,23 @@ func CaptureScreen(ctx *gin.Context) {
 		return
 	}
 	defer c.Close()
-	_, message, err := c.ReadMessage()
+	typ, message, err := c.ReadMessage()
 	if err != nil {
 		log.Println("read:", err)
 		return
+	}
+	if typ == websocket.TextMessage {
+		reader := strings.NewReader(string(message))
+		decoder := json.NewDecoder(reader)
+		msg := TextMessage{}
+		fmt.Println(decoder.Decode(&msg))
+		fmt.Printf("%v", msg)
 	}
 	log.Printf("recv: %s", message)
 	w, h := robotgo.GetScreenSize()
 	bitmap := robotgo.CaptureScreen(0, 0, w, h)
 	image := robotgo.ToImage(bitmap)
+	//robotgo.SaveJpeg(image, "E:\\huangjing\\GoWorkSpace\\src\\github.com\\topcoder520\\rebotgoapi\\test.jpg")
 	imageByte := robotgo.ToByteImg(image) //base64
 	err = c.WriteMessage(websocket.TextMessage, imageByte)
 	if err != nil {
