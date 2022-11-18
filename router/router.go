@@ -54,9 +54,13 @@ func GetRouter() *gin.Engine {
 		v2.GET("/keytap", keyboard.KeyTap)
 	}
 	//websocket
+	hub := ws.NewHub()
+	go hub.Run()
 	v3 := router.Group("/ws")
 	{
-		v3.GET("/upgrader", ws.CaptureScreen)
+		v3.GET("/upgrader", func(ctx *gin.Context) {
+			ws.ServeWs(hub, ctx.Writer, ctx.Request)
+		})
 	}
 
 	return router
